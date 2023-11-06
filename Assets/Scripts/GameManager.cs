@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public Snake sn;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highscoreText;
+    public GameObject button;
     private int score;
     private int highscore;
 
@@ -18,22 +20,19 @@ public class GameManager : MonoBehaviour
         highscoreText.text = highscore.ToString();
     }
 
-    // Deletes the attached rectangles, sets the snake to the start point and the score to 0
+    // Deletes the attached rectangles and opens the restart button
     public void RestartGame()
     {
-        for(int i = 1; i < sn.segments.Count; i++)
+        button.SetActive(true);
+
+        for (int i = 1; i < sn.segments.Count; i++)
         {
             Destroy(sn.segments[i]);
         }
 
         sn.segments.RemoveRange(1, sn.segments.Count - 1);
 
-        sn.transform.position = Vector2.zero;
-
-        score = 0;
-        scoreText.text = score.ToString();
-
-        SaveHighscore();
+        //GameObject.FindGameObjectWithTag("Snake_Head").SetActive(false);
     }
 
     // Adds 1 to the score by every food collission an overwrites the highscore
@@ -56,5 +55,20 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("highscore", highscore);
         }
+    }
+
+    //Closes the restart button, sets the snake to the start point and sets the highscore to zero
+    public void ResetTheGame()
+    {
+        button.SetActive(false);
+
+        sn.transform.position = Vector2.zero;
+
+        //GameObject.FindGameObjectWithTag("Snake_Head").SetActive(true);
+
+        score = 0;
+        scoreText.text = score.ToString();
+
+        SaveHighscore();
     }
 }
