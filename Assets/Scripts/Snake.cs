@@ -35,6 +35,13 @@ public class Snake : MonoBehaviour
         }
     }
 
+    // FixedUpdate is called in every frame
+    private void FixedUpdate()
+    {
+        SegmentMovement();
+        movement();
+    }
+
     // Adds the movement to the snake
     private void movement()
     {
@@ -50,24 +57,10 @@ public class Snake : MonoBehaviour
         }
     }
 
-    // FixedUpdate is called in every frame
-    private void FixedUpdate()
-    {
-        SegmentMovement();
-        movement();
-    }
-
-    // Adds a body part to the snake
-    public void ExpandSnake()
-    {
-        GameObject segment = Instantiate(segmentPrefab, segments[segments.Count - 1].transform.position, segmentPrefab.transform.rotation);
-        segments.Add(segment);
-    }
-
     // Is called evertime the BoxCollider is triggered
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Food")
+        if (collision.gameObject.tag == "Food")
         {
             ExpandSnake();
         }
@@ -75,5 +68,12 @@ public class Snake : MonoBehaviour
         {
             FindObjectOfType<GameManager>().RestartGame();
         }
+    }
+
+    // Adds a body part to the snake
+    public void ExpandSnake()
+    {
+        GameObject segment = Instantiate(segmentPrefab, segments[segments.Count - 1].transform.position, segmentPrefab.transform.rotation);
+        segments.Add(segment);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Food : MonoBehaviour
 {
+    //Sets the outer bounds for the food rectangle
     private int xBound = 18;
     private int yBound = 9;
 
@@ -14,6 +15,14 @@ public class Food : MonoBehaviour
     void Start()
     {
         randomPosition();
+    }
+
+    // Select a random coordinate out of the list and position the food rectangle
+    private void randomPosition()
+    {
+        calculateEmptySpace();
+        Vector2 newRandomPosition = emptySpace[Random.Range(0, emptySpace.Count)];
+        transform.position = newRandomPosition;
     }
 
     // Fill a list with all possible positions for a food rectangle
@@ -37,14 +46,6 @@ public class Food : MonoBehaviour
             Vector2 pos = new Vector2(x, y);
             emptySpace.Remove(pos);
         }
-    }
-
-    // Select a random coordinate out of the list
-    private void randomPosition()
-    {
-        calculateEmptySpace();
-        Vector2 newRandomPosition = emptySpace[Random.Range(0, emptySpace.Count)];
-        transform.position = newRandomPosition;
     }
 
     // Is called evertime the BoxCollider is triggered

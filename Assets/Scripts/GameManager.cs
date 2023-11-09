@@ -20,21 +20,6 @@ public class GameManager : MonoBehaviour
         highscoreText.text = highscore.ToString();
     }
 
-    // Deletes the attached rectangles and opens the restart button
-    public void RestartGame()
-    {
-        button.SetActive(true);
-
-        for (int i = 1; i < sn.segments.Count; i++)
-        {
-            Destroy(sn.segments[i]);
-        }
-
-        sn.segments.RemoveRange(1, sn.segments.Count - 1);
-
-        //GameObject.FindGameObjectWithTag("Snake_Head").SetActive(false);
-    }
-
     // Adds 1 to the score by every food collission an overwrites the highscore
     public void IncreaseScore()
     {
@@ -57,14 +42,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Deletes the attached rectangles and opens the restart button
+    public void RestartGame()
+    {
+        button.SetActive(true);
+
+        for (int i = 1; i < sn.segments.Count; i++)
+        {
+            Destroy(sn.segments[i]);
+        }
+
+        sn.segments.RemoveRange(1, sn.segments.Count - 1);
+    }
+
     //Closes the restart button, sets the snake to the start point and sets the highscore to zero
     public void ResetTheGame()
     {
         button.SetActive(false);
 
         sn.transform.position = Vector2.zero;
-
-        //GameObject.FindGameObjectWithTag("Snake_Head").SetActive(true);
 
         score = 0;
         scoreText.text = score.ToString();
