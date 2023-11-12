@@ -10,11 +10,13 @@ public class Food : MonoBehaviour
 
     public Snake sn;
     private List<Vector2> emptySpace = new List<Vector2>();
+    private AudioSource source;
 
     // Start is called before the first frame update
     void Start()
     {
         randomPosition();
+        source = GetComponent<AudioSource>();
     }
 
     // Select a random coordinate out of the list and position the food rectangle
@@ -52,6 +54,7 @@ public class Food : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D colission)
     {
         randomPosition();
+        source.Play();
         FindObjectOfType<GameManager>().IncreaseScore();
     }
 }

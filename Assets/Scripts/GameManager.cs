@@ -12,12 +12,14 @@ public class GameManager : MonoBehaviour
     public GameObject button;
     private int score;
     private int highscore;
+    private AudioSource source;
 
     // Start is called before the first frame update
     private void Start()
     {
         highscore = PlayerPrefs.GetInt("highscore", 0);
         highscoreText.text = highscore.ToString();
+        source = GetComponent<AudioSource>();
     }
 
     // Adds 1 to the score by every food collission an overwrites the highscore
@@ -45,6 +47,8 @@ public class GameManager : MonoBehaviour
     // Deletes the attached rectangles and opens the restart button
     public void RestartGame()
     {
+        source.Play();
+
         button.SetActive(true);
 
         for (int i = 1; i < sn.segments.Count; i++)
